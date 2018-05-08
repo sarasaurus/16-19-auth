@@ -3,21 +3,19 @@
 import { Router } from 'express';
 import HttpError from 'http-errors';
 import bodyParser from 'body-parser';
-
-import Account from '../model/account';
+import Profile from '../model/profile';
 import logger from '../lib/logger';
-import basicAuthMiddleware from '../lib/basic-auth-middleware';
 import bearerAuthMiddleware from '../lib/bearer-auth-middleware';
 
 
 const jsonParser = bodyParser.json();
 const profileRouter = new Router();
 
-profileRouter.post('/profiles', jsonParser, (request, response, next) => {
+profileRouter.post('/profiles', bearerAuthMiddleware, jsonParser, (request, response, next) => {
   if (!request.account) {
-    // TODO: return error
+    return next(new HttpError(400, 'AUTH - profile route invalid req!'))
   }
-  return profileRouter({
+  return new Profile({
     ...request.body,
     account: request.account._id,
   })

@@ -1,7 +1,7 @@
 'use strict';
 
-import Account from '../model/account';
 import HttpError from 'http-errors';
+import Account from '../model/account';
 
 export default (request, response, next) => {
 /*
@@ -33,14 +33,13 @@ NOTE: headers is on purpose, there are many headers
   return Account.findOne({ username })
     .then((account) => {
       if (!account) {
-        return next(new HttpError(404, 'no such account')) // if want to be vague tho can send 400, cause we sneaky in passwords)
+        return next(new HttpError(404, 'no such account'))// if want to be vague tho can send 400, cause we sneaky in passwords)
       }
       return account.pVerifyPassword(password);
     })
     .then((account) => {
-      request.account = accout; // <-- mutating the request object and adding an account property to it, so now can acess
+      request.account = account; // <-- mutating the request object and adding an account property to it, so now can acess
       return next(); // moving down the middle ware chain
-
     })
     .catch(next);
 // so now have just the base64 info with username:password

@@ -5,7 +5,7 @@ import Account from '../../model/account';
 
 const pCreateAccountMock = () => {
   const mock = {};
-  
+
   mock.request = {
     username: faker.internet.userName(),
     email: faker.internet.email(),
@@ -37,4 +37,5 @@ const pCreateAccountMock = () => {
 };
 
 const pRemoveAccountMock = () => Account.remove({});
+
 export { pRemoveAccountMock, pCreateAccountMock };

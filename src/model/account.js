@@ -38,20 +38,19 @@ const accountSchema = mongoose.Schema({
     default: () => new Date(),
   },
 });
-function pVerifyPassword (password) {
-  //basically need to run same hash on it
+function pVerifyPassword(password) {
+  // basically need to run same hash on it
   // bcrypt method to compare two hashes
   // important to note we never compare password to old password-- just to password HASH!
   return bcrypt.compare(password, this.passwordHash)
-  .then((result) => {
-    if(!result) {
-      throw new Error ('400', 'sneaky sneaky password error AUTH - incorrect data');
+    .then((result) => {
+      if (!result) {
+        throw new Error('400', 'sneaky sneaky password error AUTH - incorrect data');
       // error should be 401-- but beause this is password, error is sekret coded
-    }
+      }
       return this; // means to return the account
-  })
-
-};
+    });
+}
 
 function pCreateToken() {
   // ES5 funciton so this is scoped to the request object, not the schema object
@@ -63,10 +62,11 @@ function pCreateToken() {
 }
 
 accountSchema.methods.pCreateToken = pCreateToken;
+accountSchema.methods.pVerifyPassword = pVerifyPassword;
+
 const Account = mongoose.model('account', accountSchema);
 
 Account.create = (username, email, password) => {
-
   return bcrypt.hash(password, HASH_ROUNDS)
     .then((passwordHash) => {
       password = null;
@@ -80,4 +80,4 @@ Account.create = (username, email, password) => {
     });
 };
 
-export { Account, pVerifyPassword };
+export default Account;

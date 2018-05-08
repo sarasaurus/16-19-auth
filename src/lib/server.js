@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 import logger from './logger';
 import errorMiddleWare from './error-middleware';
 import authRouter from '../route/auth-router';
-import profileRouter from '../route/profile-route'
+import profileRouter from '../route/profile-route';
 
 const app = express();
 let server = null;
