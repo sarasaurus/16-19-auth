@@ -33,9 +33,6 @@ const pCreateAccountMock = () => {
       mock.account = account;
       return mock;
     });
-
-/*
-will need to mock user, account, email, password, token and token seed! */
 };
 
 const pRemoveAccountMock = () => Account.remove({});

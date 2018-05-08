@@ -11,8 +11,6 @@ describe('AUTH Router', () => {
   afterAll(stopServer);
   afterEach(pRemoveAccountMock);
 
-  let duplicateAccount = null;
-
   test('POST should return a 200 status code and a TOKEN', () => {
     return superagent.post(apiURL)
       .send({
