@@ -14,7 +14,6 @@ export default (error, request, response, next) => {
   const errorMessage = error.message.toLowerCase();
 
   if (errorMessage.includes('objectid failed')) {
-    // these errorMessages come from mongoose/mongo -- having read docs, we know these errors will come back and are checking for these strings in our 
     logger.log(logger.INFO, 'Responding with a 404 code');
     return response.sendStatus(404);
   }
@@ -37,4 +36,4 @@ export default (error, request, response, next) => {
   logger.log(logger.ERROR, 'Responding with a 500 error code');
   logger.log(logger.ERROR, error);
   return response.sendStatus(500);
-}
+};

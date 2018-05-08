@@ -10,10 +10,7 @@ import HttpError from 'http-errors';
 
 
 const HASH_ROUNDS = 8;
-// each time is exponentially slower-- inproduction it would be like 60+ or even 100+, for us, 8 is good, some computers might crash at 16 even
 const TOKEN_SEED_LENGTH = 128; 
-
-
 const accountSchema = mongoose.Schema({
   passwordHash: {
     type: String,
@@ -56,13 +53,10 @@ const accountSchema = mongoose.Schema({
 // this function to create a new token every time they login, not JUST when they signing up and we creating new accounts
 
 function pCreateToken() {
-  // ES5 funciton so this is scoped to object we in when call function
+  // ES5 funciton so this is scoped to the request object, not the schema object
   this.tokenSeed = crypto.randomBytes(TOKEN_SEED_LENGTH).toString('hex');
   return this.save()
     .then((account) => {
-    // now we have token seed!
-    // sign is for our intents, 'encrypt'
-    // .sign returns a promise that resolbes to a token -- so when it returns it sends a token
       return jsonWebToken.sign({ tokenSeed: account.tokenSeed }, process.env.SOUND_CLOUD_SECRET);
     });
   // TODO : error management
