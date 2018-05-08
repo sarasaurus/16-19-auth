@@ -5,11 +5,13 @@ import Account from '../../model/account';
 
 const pCreateAccountMock = () => {
   const mock = {};
+  
   mock.request = {
     username: faker.internet.userName(),
     email: faker.internet.email(),
     password: faker.lorem.words(5),
   };
+  console.log('MOCK in pCreateAccountMock', mock);
   // here we store REQUEST
   // note the mock.request etc is basically the same as when we set this in our router--- here we are trying to bypass superagent etc so when test in our test file are only testing our router.  here we are doing all the api requests manually essentially
   return Account.create(mock.request.username, mock.request.email, mock.request.password) 

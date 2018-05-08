@@ -70,29 +70,29 @@ describe('AUTH Router', () => {
   //   console.log('created Mock', mockAccount);
   //
   // });
-  // test('POST should return a 409 status code, no duplicates', () => {
-  //   return superagent.post(`${apiURL}/signup`)
-  //     .send({
-  //       username: 'gregor',
-  //       email: 'gregar@gregor.com',
-  //       password: 'supersekret',
-  //     })
-  //     .then(() => {
-  //       return superagent.post(`${apiURL}/signup`)
-  //         .send({
-  //           username: 'gregor',
-  //           email: 'gregar@gregor.com',
-  //           password: 'supersekret',
-  //         })
-  //         .then((Promise.reject))
-  //         .catch((err) => {
-  //           console.log('409 ERROR: ', err.body);
-  //           expect(err.status).toEqual(409);
-  //         });
-  //     });
-  // });
+  test('POST should return a 409 status code, no duplicates', () => {
+    return superagent.post(`${apiURL}/signup`)
+      .send({
+        username: 'gregor',
+        email: 'gregar@gregor.com',
+        password: 'supersekret',
+      })
+      .then(() => {
+        return superagent.post(`${apiURL}/signup`)
+          .send({
+            username: 'gregor',
+            email: 'gregar@gregor.com',
+            password: 'supersekret',
+          })
+          .then((Promise.reject))
+          .catch((err) => {
+            console.log('409 ERROR: ', err.body);
+            expect(err.status).toEqual(409);
+          });
+      });
+  });
   // TODO: wrap in a describe block
-  test.only('GET /login', () => {
+  test('GET /login', () => {
     return pCreateAccountMock()
       .then((mock) => {
         return superagent.get(`${apiURL}/login`)
@@ -102,8 +102,6 @@ describe('AUTH Router', () => {
         expect(response.status).toEqual(200);
         expect(response.body.token).toBeTruthy();
       });
-
   });
-
 });
 
