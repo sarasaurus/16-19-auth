@@ -5,11 +5,14 @@ import mongoose from 'mongoose';
 import logger from './logger';
 import errorMiddleWare from './error-middleware';
 import authRouter from '../route/auth-router';
+import profileRouter from '../route/profile-route'
 
 const app = express();
 let server = null;
 
 app.use(authRouter);
+app.use(profileRouter);
+
 app.all('*', (request, response) => {
   logger.log(logger.INFO, 'Returning a 404 from the catch-all/default route');
   return response.sendStatus(404);

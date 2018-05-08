@@ -4,7 +4,6 @@ import faker from 'faker';
 import Account from '../../model/account';
 
 const pCreateAccountMock = () => {
-  // we will do this TOMORROW:
   const mock = {};
   mock.request = {
     username: faker.internet.userName(),
@@ -19,7 +18,7 @@ const pCreateAccountMock = () => {
       // ** thats why we have to store here, so after we update the account with pCreate, we will still be able to access it using ._id
       // need access to both the request (with username, email and password) and the actual account w tokenseed and token
       return account.pCreateToken();
-      // token seed is now new-- this line changes the account-- ie updates its tokenseed
+      // token seed is now new-- this line changes the account-- ie updates its tokenseed, it returns a new token/promise
     })
     .then((token) => {
       // token is the actual token, here we don't have a ref to same account, because the tokenseed has changed-- so to access it again we use it's id**
