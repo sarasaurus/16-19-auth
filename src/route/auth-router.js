@@ -26,13 +26,13 @@ authRouter.post('/signup', jsonParser, (request, response, next) => {
     })
     .catch(next);
 });
-authRouter.get('login', basicAuthMiddleware, (request, response, next) => {
+authRouter.get('/login', basicAuthMiddleware, (request, response, next) => {
   if (!request.account) {
     return next(new HttpError(404, 'AUTH - no resource, now in auth-router'));
   }
   return request.account.pCreateToken()
     .then((token) => {
-      logger.log(logger.INFO, 'LOGIN - responding with a 200 status and a Token');
+      logger.log(logger.INFO, 'LOGIN - AuthRouter responding with a 200 status and a Token');
       return response.json({ token });
     })
     .catch(next);
