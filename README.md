@@ -1,35 +1,3 @@
-![cf](https://i.imgur.com/7v5ASc8.png) Lab 16: Basic Authentication
-======
-
-## Submission Instructions
-* Work in a fork of this repository
-* Work in a branch on your fork
-* Open a pull request to this repository
-* Submit on canvas a question and observation, how long you spent, and a link to your pull request
-
-## Resources
-* [express docs](http://expressjs.com/en/4x/api.html)
-* [mongoose guide](http://mongoosejs.com/docs/guide.html)
-* [mongoose api docs](http://mongoosejs.com/docs/api.html)
-
-### Configuration
-Configure the root of your repository with the following files and directories. Thoughtfully name and organize any additional configuration or module files.
-* **README.md** - contains documentation
-* **.env** - contains env variables **(should be git ignored)**
-* **.gitignore** - contains a [robust](http://gitignore.io) `.gitignore` file
-* **.eslintrc.json** - contains the course linter configuration
-* **.eslintignore** - contains the course linter ignore configuration
-* **package.json** - contains npm package config
-  * create a `test` script for running tests
-  * create `dbon` and `dboff` scripts for managing the mongo daemon
-* **db/** - contains mongodb files **(should be git ignored)**
-* **index.js** - entry-point of the application
-* **src/** - contains the remaining code
-  * **src/lib/** - contains module definitions
-  * **src/model/** - contains module definitions
-  * **src/route/** - contains module definitions
-  * **src/\_\_test\_\_/** - contains test modules
-  * **main.js** - starts the server
 
 ## Feature Tasks  
 For this assignment you will be building a RESTful HTTP server with basic authentication using express.
