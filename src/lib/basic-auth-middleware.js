@@ -15,19 +15,19 @@ NOTE: headers is on purpose, there are many headers
 */
 
   if (!request.headers.authorization) {
-    return next(new HttpError(400, 'AUTH - invalid request!'));
+    return next(new HttpError(400, 'AUTH BASIC - no header invalid request!'));
   }
   // if here  we know have the authorization header
 
   const base64AuthHeader = request.headers.authorization.split('Basic ')[1];
   if (!base64AuthHeader) {
-    return next(new HttpError(400, 'AUTH - invalid request'));
+    return next(new HttpError(400, 'AUTH BASIC - header no slplit invalid request'));
   }
   const stringAuthHeader = Buffer.from(base64AuthHeader, 'base64').toString();
   // stringAuthHeader should now look like username:password
   const [username, password] = stringAuthHeader.split(':'); // this is ES6 syntax saying assign 0 and 1 index of array to 0,1 index of const []... this is array destructuring!
   if (!username || !password) {
-    return next(new Error(400, 'AUTH - invalid request'));
+    return next(new Error(400, 'AUTH BASIC - no user or password invalid request'));
   }
   // now have username and password, so now need to find account and login
   return Account.findOne({ username })

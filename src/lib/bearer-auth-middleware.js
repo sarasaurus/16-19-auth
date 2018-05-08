@@ -23,18 +23,18 @@ const promisify = callbackStyleFunction => (...args) => {
 };
 
 export default (request, response, next) => {
-  if (!request.headers.authorizaiton) {
-    return next(new HttpError(400, 'AUTH - invalid Response'));
+  if (!request.headers.authorization) {
+    return next(new HttpError(400, 'AUTH BEARER - no headers invalid Response'));
   }
   const token = request.headers.authorization.split('Bearer ')[1];
   // JWT does not support promises yet!! so must use oldschool function--- 
   if (!token) {
-    return next(new HttpError(400, 'AUTH - invalid Response'));
+    return next(new HttpError(400, 'AUTH BEARER - no token invalid Response'));
   }
   // here jsonWebToken is being based as arg to the callbackSTyleFunction parameter, and then token and process.env are being passed in the the ...args parameter-- these functions are curried, one function rreturns a function, so to call, pass arg to first function, then artgs to second, thus invoking the function it returns(args)(args to  second)
   return promisify(jsonWebToken.verify)(token, process.env.SOUND_CLOUD_SECRET)
     .catch((error) => {
-      Promise.reject(new HttpError(400, `AUTH - Json webtoken Error ${error}`));
+      Promise.reject(new HttpError(400, `AUTH BEARER - Json webtoken Error ${error}`));
       // if theres an error in the promisify function it would go here first
       // this is a common tech if you want specfic catches-- order matters here!!!
       // TODO: instead of this .catch you could add this to error-middleware
@@ -45,7 +45,7 @@ export default (request, response, next) => {
     })
     .then((account) => {
       if (!account) {
-        return next(new HttpError(400, 'AUTH - invalid Response'));
+        return next(new HttpError(400, 'AUTH BEARER - invalid Response'));
       }
       request.account = account;
       return next();
