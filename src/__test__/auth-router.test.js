@@ -70,5 +70,16 @@ describe('AUTH Router', () => {
         expect(response.body.token).toBeTruthy();
       });
   });
+  test('GET /login should return 400 bad request', () => {
+    return pCreateAccountMock()
+      .then((mock) => {
+        return superagent.get(`${apiURL}/login`)
+          .send(mock.request.username, mock.request.password);
+      })
+      .then(Promise.reject)
+      .catch((err) => {
+        expect(err.status).toEqual(400);
+      });
+  });
 });
 
