@@ -59,16 +59,27 @@ describe('AUTH Router', () => {
           });
       });
   });
-  test('GET /login', () => {
+  test('GET /login it should return status 200', () => {
     return pCreateAccountMock()
       .then((mock) => {
         return superagent.get(`${apiURL}/login`)
-          .auth(mock.request.username, mock.request.password);// this is IMPORTANT, .auth is a superagent method to send usernames and passwords
+          .auth(mock.request.username, mock.request.password);// this is IMPORTANT, .auth is a superagent method to send usernames and passwords, this is sent in base64 encoding becaus of our code in basic-auth-middleware
       })
       .then((response) => {
         expect(response.status).toEqual(200);
         expect(response.body.token).toBeTruthy();
       });
+  });
+  test('GET /login should return bad request', () => {
+    return pCreateAccountMock()
+      .then((mock) => {
+        return superagent.get(`${apiURL}/login`)
+          .send(mock.request.username, mock.request.password);
+      })
+      .then(Promise.reject)
+      .catch((err) => {
+        expect(err.status).toEqual(400);
+      })
   });
 });
 
