@@ -4,15 +4,6 @@ import HttpError from 'http-errors';
 import Account from '../model/account';
 
 export default (request, response, next) => {
-/*
-1. need to check headers: request.headers.authorization
-2. parse the username and password 
-    will need to start w base 64 then compare to 'normal' string, split on the colon (colon separates username and password, ie username:password)
-3. once parsed, will find the account and login
-
-NOTE: headers is on purpose, there are many headers
-
-*/
 
   if (!request.headers.authorization) {
     return next(new HttpError(400, 'AUTH BASIC - no header invalid request!'));
@@ -45,5 +36,3 @@ NOTE: headers is on purpose, there are many headers
 // so now have just the base64 info with username:password
 };
 
-
-// typical exprss middlewrae signature is req, res, next

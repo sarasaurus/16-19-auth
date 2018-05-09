@@ -1,7 +1,5 @@
 'use strict';
 
-// cap A in Authorization is REQUIRED -- PRO TIP
-// 'Authorization: Bearer <token>' STANDARD for send ing TOKENS regardles of language
 import superagent from 'superagent';
 import { startServer, stopServer } from '../lib/server';
 
@@ -70,7 +68,6 @@ describe('POST /profiles', () => {
     return pCreateProfileMock()
       .then((profileSetMock) => {
         profileMock = profileSetMock.profile;
-        console.log('profile set mock', profileSetMock.profile);
         return superagent.get(`${apiURL}/profiles/${profileMock._id}`);
       })
       .then((response) => {
@@ -80,19 +77,6 @@ describe('POST /profiles', () => {
         expect(response.body.firstName).toEqual(profileMock.firstName);
       });
   });
-  // test('GET /profiles should return a 400 - bad request', () => {
-  //   let profileMock = null;
-  //   return pCreateProfileMock()
-  //     .then((profileSetMock) => {
-  //       profileMock = profileSetMock.profile;
-  //       console.log('profile set mock', profileSetMock.profile);
-  //       return superagent.get(`${apiURL}/profiles/${profileMock._id}`);
-  //     })
-  //     .then(Promise.reject)
-  //     .catch((err) => {
-  //       expect(err.status).toEqual(400);
-  //     });
-  // });
   test('GET /profiles should return a 404 - no id', () => {
     let profileMock = null;
     return pCreateProfileMock()
