@@ -26,6 +26,7 @@ authRouter.post('/signup', jsonParser, (request, response, next) => {
     })
     .catch(next);
 });
+
 authRouter.get('/login', basicAuthMiddleware, (request, response, next) => {
   if (!request.account) {
     return next(new HttpError(404, 'AUTH - no resource, now in auth-router'));
@@ -34,6 +35,7 @@ authRouter.get('/login', basicAuthMiddleware, (request, response, next) => {
     .then((token) => {
       logger.log(logger.INFO, 'LOGIN - AuthRouter responding with a 200 status and a Token');
       return response.json({ token });
+      // the token is considered authorization like what doors can you open, what resources can you access. the authentication is in our middleware when we are comparing tokenSeeds (ie passwords in the way we can discuss them in our code, which is via tokenSeed)
     })
     .catch(next);
 });

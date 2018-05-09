@@ -70,7 +70,7 @@ describe('AUTH Router', () => {
         expect(response.body.token).toBeTruthy();
       });
   });
-  test('GET /login should return bad request', () => {
+  test('GET /login should return 400 bad request', () => {
     return pCreateAccountMock()
       .then((mock) => {
         return superagent.get(`${apiURL}/login`)
@@ -79,7 +79,7 @@ describe('AUTH Router', () => {
       .then(Promise.reject)
       .catch((err) => {
         expect(err.status).toEqual(400);
-      })
+      });
   });
 });
 
