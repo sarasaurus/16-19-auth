@@ -46,17 +46,13 @@ describe('POST /profiles', () => {
       })
       .then(Promise.reject)
       .catch((response) => {
-        console.log('post 400', response.status);
         expect(response.status).toEqual(400);
       });
   });
   test('POST /profiles should return a 400 - no token', () => {
-    let accountMock = null;
     return pCreateAccountMock()
       .then((accountSetMock) => {
-        accountMock = accountSetMock;
         return superagent.post(`${apiURL}/profiles`)
-          // .set('Authorization', `Bearer ${accountSetMock.token}`)
           .send({
             bio: 'I so coool',
             firstName: 'testbro',
@@ -65,7 +61,6 @@ describe('POST /profiles', () => {
       })
       .then(Promise.reject)
       .catch((response) => {
-        console.log('post 400', response.status);
         expect(response.status).toEqual(400);
       });
   });

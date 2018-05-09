@@ -1,6 +1,5 @@
 'use strict';
 
-//how we build mocks in one to many
 import faker from 'faker';
 import Profile from '../../model/profile';
 import { pCreateAccountMock, pRemoveAccountMock } from './account-mock';
@@ -17,7 +16,7 @@ const pCreateProfileMock = () => {
         avatar: faker.random.image(),
         lastName: faker.name.lastName(),
         firstName: faker.name.firstName(),
-        account: accountSetMock.account._id, // this establishes the relationship!
+        account: accountSetMock.account._id, 
       }).save();
     })
     .then((profile) => {
@@ -35,4 +34,3 @@ const pRemoveProfileMock = () => {
 };
 
 export { pCreateProfileMock, pRemoveProfileMock };
-// with default it means the whole thing, without means side by side to complete funcitons

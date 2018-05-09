@@ -37,39 +37,7 @@ describe('AUTH Router', () => {
         expect(err.status).toEqual(400);
       });
   });
-  // test('POST should return a 409 status code, no duplicates using pCreate', () => {
-  //   let mockAccount = {};
-  //   return pCreateAccountMock()
-  //     .then((response) => {
-  //       console.log('RESPONSE from pCreat', response);
-  //       mockAccount = {
-  //         username: response.account.username,
-  //         email: response.account.email,
-  //         password: 'fake password 123',
-  //       };
-  //       return superagent.post(`${apiURL}/signup`)
-  //         .send({
-  //           username: mockAccount.username,
-  //           email: mockAccount.email,
-  //           password: mockAccount.password,
-  //         })
-  //         .then(() => {
-  //           return superagent.post(`${apiURL}/signup`)
-  //             .send({
-  //               username: mockAccount.username,
-  //               email: mockAccount.email,
-  //               password: mockAccount.password,
-  //             });
-  //         })
-  //         .then((Promise.reject))
-  //         .catch((err) => {
-  //           console.log('409 ERROR: ', err.body);
-  //           expect(err.status).toEqual(409);
-  //         });
-  //     });
-  //   console.log('created Mock', mockAccount);
-  //
-  // });
+
   test('POST should return a 409 status code, no duplicates', () => {
     return superagent.post(`${apiURL}/signup`)
       .send({
@@ -91,7 +59,6 @@ describe('AUTH Router', () => {
           });
       });
   });
-  // TODO: wrap in a describe block
   test('GET /login', () => {
     return pCreateAccountMock()
       .then((mock) => {
