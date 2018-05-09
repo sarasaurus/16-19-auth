@@ -5,7 +5,7 @@
 import superagent from 'superagent';
 import { startServer, stopServer } from '../lib/server';
 
-import { pRemoveProfileMock } from './lib/profile-mock';
+import { pRemoveProfileMock, pCreateProfileMock } from './lib/profile-mock';
 import { pCreateAccountMock } from './lib/account-mock';
 
 const apiURL = `http://localhost:${process.env.PORT}`;
@@ -15,7 +15,7 @@ describe('POST /profiles', () => {
   afterAll(stopServer);
   afterEach(pRemoveProfileMock);
 
-  test.only('POST /profiles should get a 200 if there aree no errors', () => {
+  test('POST /profiles should get a 200 if there aree no errors', () => {
     let accountMock = null;
     return pCreateAccountMock()
       .then((accountSetMock) => {
@@ -33,6 +33,22 @@ describe('POST /profiles', () => {
         expect(response.body.account).toEqual(accountMock.account._id.toString());
         expect(response.body.lastName).toEqual('lastnamebro');
         expect(response.body.firstName).toEqual('testbro');
+      });
+  });
+
+  test('GET /profiles should get a 200 if there aree no errors', () => {
+    let profileMock = null;
+    return pCreateProfileMock()
+      .then((profileSetMock) => {
+        profileMock = profileSetMock.profile;
+        console.log('profile set mock', profileSetMock.profile);
+        return superagent.get(`${apiURL}/profiles/${profileMock._id}`);
+      })
+      .then((response) => {
+        expect(response.status).toEqual(200);
+        expect(response.body._id).toEqual(profileMock._id.toString());
+        expect(response.body.lastName).toEqual(profileMock.lastName);
+        expect(response.body.firstName).toEqual(profileMock.firstName);
       });
   });
 });

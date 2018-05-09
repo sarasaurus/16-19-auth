@@ -22,9 +22,11 @@ const pCreateProfileMock = () => {
     })
     .then((profile) => {
       resultMock.profile = profile;
+      console.log('WHAT IS RESULTMOCK PROF', resultMock);
       return resultMock;
     });
 };
+
 const pRemoveProfileMock = () => {
   return Promise.all([
     Profile.remove({}),
