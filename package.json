@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint .",
     "test": "jest --coverage --forceExit --runInBand",
-    "testone": "jest --coverage account.test.js",
+    "testauth": "jest --coverage --forceExit auth-router.test.js",
+    "testprof": "jest --coverage --forceExit profile-router.test.js",
     "dbon": "mkdir -p ./db && mongod --dbpath ./db",
     "dboff": "killall mongod"
   },
