@@ -13,7 +13,7 @@ const profileRouter = new Router();
 
 profileRouter.post('/profiles', bearerAuthMiddleware, jsonParser, (request, response, next) => {
   if (!request.account) {
-    return next(new HttpError(400, 'AUTH  in POST- profile route invalid req!'));
+    return next(new HttpError(401, 'AUTH  in POST- profile route invalid req!'));
   }
   return new Profile({
     ...request.body,
@@ -28,14 +28,13 @@ profileRouter.post('/profiles', bearerAuthMiddleware, jsonParser, (request, resp
 });
 
 profileRouter.get('/profiles/:id', (request, response, next) => {
-  // if (!request.params._id) {
-  //   console.log('WHAT REQ.params', request.params);
-  //   return next(new HttpError(400, 'AUTH in GET - no id!'));
-  // }
+  if (!request.params.id) {
+    return next(new HttpError(400, 'AUTH in GET - no id!'));
+  }
   return Profile.findById(request.params.id)
     .then((profile) => {
       if (!profile) {
-        // stuff 
+        return next(new HttpError(400, 'AUTH  in GET- profile route invalid req!'));
       }
       logger.log(logger.INFO, '200 in profile, GET route!');
       return response.json(profile);

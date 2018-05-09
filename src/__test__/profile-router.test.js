@@ -15,7 +15,7 @@ describe('POST /profiles', () => {
   afterAll(stopServer);
   afterEach(pRemoveProfileMock);
 
-  test('POST /profiles should get a 200 if there aree no errors', () => {
+  test('POST /profiles should return a 200 if there are no errors', () => {
     let accountMock = null;
     return pCreateAccountMock()
       .then((accountSetMock) => {
@@ -35,8 +35,42 @@ describe('POST /profiles', () => {
         expect(response.body.firstName).toEqual('testbro');
       });
   });
+  // test('POST /profiles should return a 400 - bad request', () => {
+  //   let accountMock = null;
+  //   return pCreateAccountMock()
+  //     .then((accountSetMock) => {
+  //       accountMock = accountSetMock;
+  //       return superagent.post(`${apiURL}/profiles`)
+  //         .set('Authorization', `Bearer ${accountSetMock.token}`)
+  //         .send({});
+  //     })
+  //     .then(Promise.reject)
+  //     .catch((response) => {
+  //       console.log('post 400', response.status);
+  //       expect(response.status).toEqual(400);
+  //     });
+  // });
+  test('POST /profiles should return a 400 - no token', () => {
+    let accountMock = null;
+    return pCreateAccountMock()
+      .then((accountSetMock) => {
+        accountMock = accountSetMock;
+        return superagent.post(`${apiURL}/profiles`)
+          // .set('Authorization', `Bearer ${accountSetMock.token}`)
+          .send({
+            bio: 'I so coool',
+            firstName: 'testbro',
+            lastName: 'lastnamebro',
+          });
+      })
+      .then(Promise.reject)
+      .catch((response) => {
+        console.log('post 400', response.status);
+        expect(response.status).toEqual(400);
+      });
+  });
 
-  test('GET /profiles should get a 200 if there aree no errors', () => {
+  test('GET /profiles should return a 200 if there are no errors', () => {
     let profileMock = null;
     return pCreateProfileMock()
       .then((profileSetMock) => {
@@ -49,6 +83,32 @@ describe('POST /profiles', () => {
         expect(response.body._id).toEqual(profileMock._id.toString());
         expect(response.body.lastName).toEqual(profileMock.lastName);
         expect(response.body.firstName).toEqual(profileMock.firstName);
+      });
+  });
+  // test('GET /profiles should return a 400 - bad request', () => {
+  //   let profileMock = null;
+  //   return pCreateProfileMock()
+  //     .then((profileSetMock) => {
+  //       profileMock = profileSetMock.profile;
+  //       console.log('profile set mock', profileSetMock.profile);
+  //       return superagent.get(`${apiURL}/profiles/${profileMock._id}`);
+  //     })
+  //     .then(Promise.reject)
+  //     .catch((err) => {
+  //       expect(err.status).toEqual(400);
+  //     });
+  // });
+  test('GET /profiles should return a 404 - no id', () => {
+    let profileMock = null;
+    return pCreateProfileMock()
+      .then((profileSetMock) => {
+        profileMock = profileSetMock.profile;
+        console.log('profile set mock', profileSetMock.profile);
+        return superagent.get(`${apiURL}/profiles/NOT_VALID`);
+      })
+      .then(Promise.reject)
+      .catch((err) => {
+        expect(err.status).toEqual(404);
       });
   });
 });
