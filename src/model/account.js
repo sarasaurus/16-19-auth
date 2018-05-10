@@ -81,3 +81,5 @@ Account.create = (username, email, password) => {
 };
 
 export default Account;
+
+// we are linking our tokens to the password, but could create separte tokens for diff users then create bearer-user-auth mmiddleware to handle those diff permisionsß
