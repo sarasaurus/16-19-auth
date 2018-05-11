@@ -29,9 +29,6 @@ describe('TESTING ROUTES AT /assets', () => {
               expect(response.body._id).toBeTruthy();
               expect(response.body.url).toBeTruthy();
             });
-        })
-        .catch((err) => {
-          expect(err.status).toEqual(200);
         });
     });
   });
