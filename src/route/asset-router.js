@@ -21,7 +21,7 @@ assetRouter.post('/assets', bearerAuthMiddleware, multerUpload.any(), (request, 
     return next(new HttpError(400, 'ASSET ROUTER ERROR: invalid request'));
   }
   // const file = request.files[0];
-  console.log('in asset route, first then request: ', request.files);
+  console.log('in asset route, first .then request: ', request.files);
   const [file] = request.files;
   const key = `${file.filename}.${file.originalname}`;
 
@@ -70,11 +70,13 @@ assetRouter.delete('/assets/:id', bearerAuthMiddleware, (request, response, next
   return Asset.findById(request.params.id)
     .then((asset) => {
       if (!asset) {
-        return next(new HttpError(401, 'ASSET in DELETE profile route id, but no resource!'));
+        return next(new HttpError(401, 'ASSET in DELETE route id, but no resource!'));
       }
-      logger.log(logger.INFO, '200 in profile, DELETE route!');
-      
-      return response.json(asset);
+      logger.log(logger.INFO, '204 in ASSET DELETE route!');
+      return s3Remove(asset.url);
+    })
+    .then(() => {
+      return response.sendStatus(204);
     })
     .catch(next);
 });

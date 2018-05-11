@@ -148,7 +148,7 @@ describe('TESTING ROUTES AT /assets', () => {
     });
   });
   describe('DELETE 204 for successful delete!', () => {
-    test('should return 204', () => {
+    test.only('should return 204', () => {
       // if you have a slow computer you can set a TimeOut function 
       // jest.setTimeout(10000); 
       let testMock = null;
@@ -158,9 +158,8 @@ describe('TESTING ROUTES AT /assets', () => {
           const { token } = mockResponse.accountMock;// destructuring! see profile-mock at similar line numbers, now token has the value at the simlarly named thing on accountMock, mockResponse.accoutMock, or mockResponse.asset
           return superagent.delete(`${apiURL}/assets/${testMock._id}`)
             .set('Authorization', `Bearer ${token}`)
-            .then(Promise.reject)
-            .catch((err) => {
-              expect(err.status).toEqual(401);
+            .then((response) => {
+              expect(response.status).toEqual(204);  
             });
         });
     });

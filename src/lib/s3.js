@@ -46,7 +46,7 @@ const s3Remove = (key) => {
   return amazonS3.deleteObject(removeOptions)
     .promise()
     .then((data) => {
-      console.log(data, 'SUCCESSFUL DELETION');
+      console.log(data, 'AWS SUCCESSFUL DELETION');
     })
     .catch((err) => {
       Promise.reject(err);
