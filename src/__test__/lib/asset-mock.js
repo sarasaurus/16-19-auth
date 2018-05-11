@@ -2,7 +2,6 @@
 
 import faker from 'faker';
 import Asset from '../../model/asset';
-// import Account from '../../model/account';
 import { pCreateAccountMock, pRemoveAccountMock } from './account-mock';
 
 const pCreateAssetMock = () => {
@@ -23,6 +22,7 @@ const pCreateAssetMock = () => {
       return resultMock;
     });
 };
+
 /*
 pCreateAsset Mock returns:
 resultMock = {
