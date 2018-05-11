@@ -8,7 +8,7 @@
     "test": "jest --coverage --forceExit --runInBand",
     "testauth": "jest --coverage --forceExit auth-router.test.js",
     "testprof": "jest --coverage --forceExit profile-router.test.js",
-    "testasset": "jest --coverage asset-router.test.js",
+    "testasset": "jest --coverage --forceExit asset-router.test.js",
     "dbon": "mkdir -p ./db && mongod --dbpath ./db",
     "dboff": "killall mongod"
   },

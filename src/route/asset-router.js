@@ -36,10 +36,47 @@ assetRouter.post('/assets', bearerAuthMiddleware, multerUpload.any(), (request, 
       }).save()
         .then(asset => response.json(asset))
         .catch((err) => {
-          console.log('asset router err', err.status)
+          console.log('asset router err', err.status);
           return next;
         });
     });
+});
+assetRouter.get('/assets/:id', bearerAuthMiddleware, (request, response, next) => {
+  // if(!request.account) {
+  //   return next(new HttpError(404, 'ASSET ROUTER GET ERROR: asset not found, no account! '));
+  // }
+  if (!request.params.id) {
+    console.log('REQUEST IN GET:', request);
+    return next(new HttpError(404, 'ASSET ROUTER GET ERROR: no params  _id'));
+  }
+  return Asset.findById(request.params.id)
+    .then((asset) => {
+      if (!asset) {
+        return next(new HttpError(401, 'ASSET in GET- profile route id, but no resource!'));
+      }
+      logger.log(logger.INFO, '200 in profile, GET route!');
+      return response.json(asset);
+    })
+    .catch(next);
+});
+assetRouter.delete('/assets/:id', bearerAuthMiddleware, (request, response, next) => {
+  // if(!request.account) {
+  //   return next(new HttpError(404, 'ASSET ROUTER GET ERROR: asset not found, no account! '));
+  // }
+  if (!request.params.id) {
+    console.log('REQUEST IN DELETE:', request);
+    return next(new HttpError(404, 'ASSET ROUTER DELETE ERROR: no params  _id'));
+  }
+  return Asset.findById(request.params.id)
+    .then((asset) => {
+      if (!asset) {
+        return next(new HttpError(401, 'ASSET in DELETE profile route id, but no resource!'));
+      }
+      logger.log(logger.INFO, '200 in profile, DELETE route!');
+      
+      return response.json(asset);
+    })
+    .catch(next);
 });
 
 export default assetRouter;

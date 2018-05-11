@@ -20,7 +20,6 @@ const pCreateAssetMock = () => {
     })
     .then((asset) => {
       resultMock.asset = asset;
-      console.log('WHAT IS RESULTMOCK in ASSET', resultMock);
       return resultMock;
     });
 };
