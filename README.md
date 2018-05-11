@@ -11,7 +11,7 @@ For now the main entry point is via the testing files:
 2. in one type: __npm run dbon__, which will start the Mongo database
 3. in the other: __npm run test__, which will run the testing suite
 
-### Implimented
+### API routes and DB Schemas
 __Account Schema__  
 The __POST__ route to api/signup and the __GET__ route to api/login
 http://localhost:3000/api/signup?username==_'blahblah'_ email==_'blah@blah.com'_ password==_'blah123'_
@@ -26,6 +26,11 @@ the __GET ROUTE:__ http://localhost:3000/api/profiles/:id
 __Asset Schema__  
 The __POST__ , __GET__ and __DELETE__ routes to api/assets/:id
 they perform CRUD operations on an external file storing service, while storing meta information about the file in a locally stored MongoDB
+## Successful Requests and Error Handling
+successful requests to POST and GET return 200, DELETE returns 204  
+unsuccessful requests to POST, GET and DELETE include:  
+404 - file not found / wrong id, 401 - not authorized
+
 
 #### Proof of External Post
 ![proof](./src/assets/proof.png) 

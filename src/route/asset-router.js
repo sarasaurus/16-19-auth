@@ -37,6 +37,9 @@ assetRouter.post('/assets', bearerAuthMiddleware, multerUpload.any(), (request, 
     });
 });
 assetRouter.get('/assets/:id', bearerAuthMiddleware, (request, response, next) => {
+  if (!request.account) {
+    return next(new HttpError(404, 'ASSET ROUTER GET ERROR: asset not found, no account! '));
+  }
   if (!request.params.id) {
     return next(new HttpError(404, 'ASSET ROUTER GET ERROR: no params  _id'));
   }
@@ -51,9 +54,9 @@ assetRouter.get('/assets/:id', bearerAuthMiddleware, (request, response, next) =
     .catch(next);
 });
 assetRouter.delete('/assets/:id', bearerAuthMiddleware, (request, response, next) => {
-  // if(!request.account) {
-  //   return next(new HttpError(404, 'ASSET ROUTER GET ERROR: asset not found, no account! '));
-  // }
+  if (!request.account) {
+    return next(new HttpError(404, 'ASSET ROUTER GET ERROR: asset not found, no account! '));
+  }
   if (!request.params.id) {
     return next(new HttpError(404, 'ASSET ROUTER DELETE ERROR: no params  _id'));
   }
