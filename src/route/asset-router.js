@@ -38,7 +38,6 @@ assetRouter.post('/assets', bearerAuthMiddleware, multerUpload.any(), (request, 
 });
 assetRouter.get('/assets/:id', bearerAuthMiddleware, (request, response, next) => {
   if (!request.params.id) {
-    console.log('REQUEST IN GET:', request);
     return next(new HttpError(404, 'ASSET ROUTER GET ERROR: no params  _id'));
   }
   return Asset.findById(request.params.id)
@@ -56,7 +55,6 @@ assetRouter.delete('/assets/:id', bearerAuthMiddleware, (request, response, next
   //   return next(new HttpError(404, 'ASSET ROUTER GET ERROR: asset not found, no account! '));
   // }
   if (!request.params.id) {
-    console.log('REQUEST IN DELETE:', request);
     return next(new HttpError(404, 'ASSET ROUTER DELETE ERROR: no params  _id'));
   }
   return Asset.findByIdAndRemove(request.params.id)

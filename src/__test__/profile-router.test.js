@@ -82,7 +82,6 @@ describe('POST /profiles', () => {
     return pCreateProfileMock()
       .then((profileSetMock) => {
         profileMock = profileSetMock.profile;
-        console.log('profile set mock', profileSetMock.profile);
         return superagent.get(`${apiURL}/profiles/NOT_VALID`);
       })
       .then(Promise.reject)
