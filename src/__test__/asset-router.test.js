@@ -148,7 +148,7 @@ describe('TESTING ROUTES AT /assets', () => {
     });
   });
   describe('DELETE 204 for successful delete!', () => {
-    test.only('should return 204', () => {
+    test('should return 204', () => {
       // if you have a slow computer you can set a TimeOut function 
       // jest.setTimeout(10000); 
       let testMock = null;
@@ -160,6 +160,42 @@ describe('TESTING ROUTES AT /assets', () => {
             .set('Authorization', `Bearer ${token}`)
             .then((response) => {
               expect(response.status).toEqual(204);  
+            });
+        });
+    });
+  });
+  describe('DELETE  404 for Bad ID/ no resource', () => {
+    test('should return a 404', () => {
+      // if you have a slow computer you can set a TimeOut function 
+      // jest.setTimeout(10000); 
+      let testMock = null;
+      return pCreateAssetMock()
+        .then((mockResponse) => {
+          testMock = mockResponse.asset;
+          const { token } = mockResponse.accountMock;// destructuring! see profile-mock at similar line numbers, now token has the value at the simlarly named thing on accountMock, mockResponse.accoutMock, or mockResponse.asset
+          return superagent.delete(`${apiURL}/assets/BAD_ID`)
+            .set('Authorization', `Bearer ${token}`)
+            .then(Promise.reject)
+            .catch((err) => {
+              expect(err.status).toEqual(404);
+            });
+        });
+    });
+  });
+  describe('DELETE  401 for no token', () => {
+    test('should return a 401', () => {
+      // if you have a slow computer you can set a TimeOut function 
+      // jest.setTimeout(10000); 
+      let testMock = null;
+      return pCreateAssetMock()
+        .then((mockResponse) => {
+          testMock = mockResponse.asset;
+          const { token } = mockResponse.accountMock;// destructuring! see profile-mock at similar line numbers, now token has the value at the simlarly named thing on accountMock, mockResponse.accoutMock, or mockResponse.asset
+          return superagent.delete(`${apiURL}/assets/${testMock._id}`)
+            .set('Authorization', `Bearer `)
+            .then(Promise.reject)
+            .catch((err) => {
+              expect(err.status).toEqual(401);
             });
         });
     });
