@@ -6,6 +6,8 @@ import fs from 'fs-extra';
 // key = aws way to refer to filenames
 // these variables inside s3Upload need to be inside a function NB in docs example 1 is not the way, example 2 is the way
 // this is weird but needed to get mock environment to work
+// ACL: is basically the permission level of your bucket
+// BodyL is turned the chunked stream into a whole one
 
 const s3Upload = (path, key) => {
   const AWS = require('aws-sdk'); // class
@@ -17,11 +19,13 @@ const s3Upload = (path, key) => {
     ACL: 'public-read',
     Body: fs.createReadStream(path), // the readable stream is like our bodyparser += taking the chunks of data sent via http and parsing them into a readable stream-- whole
   };
-  // .promise() this calls the internal callback of the .upload method -- vanilla aws methods are all node style err first callbacks, being err/data-- this is saying if data-- .then if err .catch, IE when you add .promise() you are basically promisifying their methods, you could make your own function to do this, you could use bluebird whatever.
+  // .promise() this calls the internal callback of the .upload method -- vanilla aws methods are all node style err first callbacks, being err/data-- this is saying if data-- .then if err .catch, IE when you add .promise() you are basically promisifying their methods, you could make your own function to do this, you could use bluebird whatever.  
+  // FRIDAY: .promise() is an aws method to promisfy their shit
+
   return amazonS3.upload(uploadOptions)
     .promise()
     .then((response) => {
-      // console.log('S3 RESPONSE: ', response);
+      console.log('S3 RESPONSE: ', response);
       return fs.remove(path)
         .then(() => {
           // this response is from .then on 23, it chains off of 25, but we no want that return so skip the () part

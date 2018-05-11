@@ -14,7 +14,7 @@ describe('TESTING ROUTES AT /assets', () => {
   afterEach(pRemoveAssetMock);
 
   describe('POST  200 for a succesful post to /assets', () => {
-    test('should return a 200', () => {
+    test.only('should return a 200', () => {
       const accountMock = null;
       return pCreateAssetMock()
         .then((mockResponse) => {
