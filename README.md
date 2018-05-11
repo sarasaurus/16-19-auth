@@ -27,6 +27,8 @@ __Asset Schema__
 The __POST__ , __GET__ and __DELETE__ routes to api/assets/:id
 they perform CRUD operations on an external file storing service, while storing meta information about the file in a locally stored MongoDB
 
+#### Proof of External Post
+![proof](./src/assets/proof.png) 
 
 ### Architecture
 This application uses the __Node.js__ framework.  
