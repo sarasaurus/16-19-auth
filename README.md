@@ -25,7 +25,7 @@ the __GET ROUTE:__ http://localhost:3000/api/profiles/:id
 
 __Asset Schema__  
 The __POST__ , __GET__ and __DELETE__ routes to api/assets/:id
-they link to an external database for file storage
+they perform CRUD operations on an external file storing service, while storing meta information about the file in a locally stored MongoDB
 
 
 ### Architecture
