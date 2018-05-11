@@ -42,6 +42,4 @@ profileRouter.get('/profiles/:id', (request, response, next) => {
     .catch(next);
 });
 
-// ...request.body will destructure all the properties! then request.account, grabs the property it wants
-
 export default profileRouter;
