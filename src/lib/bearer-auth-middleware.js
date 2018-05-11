@@ -29,7 +29,7 @@ export default (request, response, next) => {
   const token = request.headers.authorization.split('Bearer ')[1];
   // JWT does not support promises yet!! so must use oldschool function--- 
   if (!token) {
-    return next(new HttpError(400, 'AUTH BEARER - no token invalid Response'));
+    return next(new HttpError(401, 'AUTH BEARER - no token invalid Response'));
   }
   // here jsonWebToken is being based as arg to the callbackSTyleFunction parameter, and then token and process.env are being passed in the the ...args parameter-- these functions are curried, one function rreturns a function, so to call, pass arg to first function, then artgs to second, thus invoking the function it returns(args)(args to  second)
   return promisify(jsonWebToken.verify)(token, process.env.SOUND_CLOUD_SECRET)

@@ -21,7 +21,6 @@ const pCreateProfileMock = () => {
     })
     .then((profile) => {
       resultMock.profile = profile;
-      console.log('WHAT IS RESULTMOCK PROF', resultMock);
       return resultMock;
     });
 };
