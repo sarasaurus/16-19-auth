@@ -19,7 +19,6 @@ describe('AUTH Router', () => {
         password: 'supersekret',
       })
       .then((response) => {
-        console.log('RESPONSE: ', response.body);
         expect(response.status).toEqual(200);
         expect(response.body.token).toBeTruthy();
       });
@@ -33,7 +32,6 @@ describe('AUTH Router', () => {
       })
       .then((Promise.reject))
       .catch((err) => {
-        console.log('RESPONSE: ', err);
         expect(err.status).toEqual(400);
       });
   });
@@ -54,7 +52,6 @@ describe('AUTH Router', () => {
           })
           .then((Promise.reject))
           .catch((err) => {
-            console.log('409 ERROR: ', err.body);
             expect(err.status).toEqual(409);
           });
       });
